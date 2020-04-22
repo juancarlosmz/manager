@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="card shadow">
+    <div class="card-header border-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="mb-0">Accounts</h3>
+        </div>
+        <div class="col text-right">
+          <a href="#!" class="btn btn-sm btn-primary">See all</a>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <!-- Projects table -->
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">First name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Rol</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users" >
+            <th scope="row">
+              {{user.name}}
+            </th>
+            <td>
+              {{user.name}}
+            </td>
+            <td>
+              {{user.email}}
+            </td>
+            <td>
+              <i class="fas fa-arrow-down text-danger mr-3"></i> {{user.rol}}
+            </td>
+            <td>
+              <a [routerLink]="['/profile',user.name,user.rol]"><i class="far fa-eye text-info mr-3"></i></a>
+              <a (click)="pasarParametro(user)" ><i class="far fa-eye text-info mr-3"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

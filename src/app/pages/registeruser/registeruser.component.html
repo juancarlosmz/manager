@@ -1,0 +1,134 @@
+<br>
+  <form [formGroup]="formularioUsuario" >
+    <div class="row">
+      <div class="col-6 col-sm-6 col-md-6">
+        <div class="form-group">
+          <div class="input-group input-group-alternative mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+            </div>
+            <input formControlName="id" type="hidden" style="display: none!important;">
+            <input formControlName="firstname" class="form-control" placeholder="First Name" type="text">
+          </div>
+        </div>
+        <div *ngIf="formularioUsuario.controls['firstname'].invalid && formularioUsuario.controls['firstname'].dirty" class="form-group">
+          <div *ngIf="formularioUsuario.controls['firstname'].errors.required" class="input-group input-group-alternative mb-3 alert alert-danger" role="alert">
+                First Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-sm-6 col-md-6">
+        <div class="form-group">
+          <div class="input-group input-group-alternative mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+            </div>
+            <input formControlName="lastname" class="form-control" placeholder="Last Name" type="text">
+          </div>
+        </div>
+        <div *ngIf="formularioUsuario.controls['lastname'].invalid && formularioUsuario.controls['lastname'].dirty" class="form-group">
+          <div *ngIf="formularioUsuario.controls['lastname'].errors.required" class="input-group input-group-alternative mb-3 alert alert-danger" role="alert">
+                Last Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-sm-6 col-md-6">
+        <div class="form-group">
+          <div class="input-group input-group-alternative mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+            </div>
+            <input formControlName="email" class="form-control" placeholder="Email" type="email">
+          </div>
+        </div>
+        <div *ngIf="formularioUsuario.controls['email'].invalid && formularioUsuario.controls['email'].dirty" class="form-group">
+          <div *ngIf="formularioUsuario.controls['email'].errors.required" class="input-group input-group-alternative mb-3 alert alert-danger" role="alert">
+            Email is required
+          </div>
+          <div *ngIf="formularioUsuario.controls['email'].errors.email" class="input-group input-group-alternative mb-3 alert alert-danger" role="alert">
+            Email is not valid
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="esNuevo" class="col-6 col-sm-6 col-md-6">
+        <div class="form-group">
+          <div class="input-group input-group-alternative">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+            </div>
+            <input formControlName="passwd" class="form-control" placeholder="Password" type="password">
+          </div>
+        </div>
+        <div *ngIf="formularioUsuario.controls['passwd'].invalid && formularioUsuario.controls['passwd'].dirty" class="form-group">
+          <div *ngIf="formularioUsuario.controls['passwd'].errors.required" class="input-group input-group-alternative mb-3 alert alert-danger" role="alert">
+            Password is required
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-sm-6 col-md-6">
+        <div class="form-group">
+          <div class="input-group input-group-alternative">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+            </div>
+            <select formControlName="rol" class="form-control" name="" id="" placeholder="Rol">
+              <option value="">Select one role</option>
+              <option *ngFor="let rol of rols" [value]="rol.value">
+                {{ rol.viewValue }}
+              </option>
+            </select>
+
+          </div>
+        </div>
+        <div *ngIf="formularioUsuario.controls['rol'].invalid && formularioUsuario.controls['rol'].dirty" class="form-group">
+          <div *ngIf="formularioUsuario.controls['rol'].errors.required" class="input-group input-group-alternative mb-3 alert alert-danger" role="alert">
+            Rol is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button *ngIf="esNuevo" [disabled]="!formularioUsuario.valid" (click)="f_agregarUsuario()" type="button" class="btn btn-primary mt-4">Create account</button>
+      <button *ngIf="!esNuevo" (click)="f_editarUsuario()" type="button" class="btn btn-success mt-4">Edit</button>
+    </div>
+  </form>
+  <br>
+  <div class="table-responsive">
+    <!-- Projects table -->
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of UsersClass; let posicion = index" >
+          <th *ngIf="user.id != idsesion" style="display:none;">{{user.id}}</th>
+          <th *ngIf="user.id != idsesion" scope="row">{{user.firstname}}</th>
+          <td *ngIf="user.id != idsesion"> {{user.email}} </td>
+          <td *ngIf="user.id != idsesion">
+            <label *ngFor="let rol of rols">
+              <label *ngIf="rol.value == user.rol" >{{ rol.viewValue }}</label>
+            </label>
+          </td>
+          <td *ngIf="user.id != idsesion">
+            <i style="cursor: pointer;" (click)="f_edit(posicion)" class="fas fa-edit text-info mr-3"></i>
+          </td>
+          <td *ngIf="user.id != idsesion">
+            <i style="cursor: pointer;" (click)="f_eliminarUsuario(user.id)" class="fas fa-trash text-danger mr-3"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+

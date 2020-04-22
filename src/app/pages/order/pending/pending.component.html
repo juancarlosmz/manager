@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <!-- Projects table -->
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Order</th>
+        <th scope="col">Client</th>
+        <th scope="col">Value</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of allOrdersPending['orders']">
+        <th scope="row">
+          {{order.number}}
+        </th>
+        <td>
+          {{order.billing_address.name}}
+        </td>
+        <td>
+           {{order.total_price}}
+        </td>
+        <td>
+            {{order.created_at | date}}
+       </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
