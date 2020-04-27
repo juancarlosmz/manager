@@ -14,7 +14,7 @@ export class UserProfileEditorComponent implements OnInit {
   formularioUsuario: FormGroup;
   //El usuario
   UsersClass: User = new User();
-  idsesion: number;
+  idsesion: string;
   carga: boolean = false;
   checkpasswd: boolean = false;
 
@@ -28,7 +28,8 @@ export class UserProfileEditorComponent implements OnInit {
     private rutaActiva: ActivatedRoute,
     private UserInyected: UserService
   ) {
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
 
   ngOnInit(): void {

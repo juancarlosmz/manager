@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderService {
-  //ruta: string = 'http://localhost:50/backend_manager/api/shopify';
+  ruta: string = 'http://localhost:50/backend_manager/api/shopify';
   //jeremy
-  ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api/shopify';
+  //ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api/shopify';
 
   orderService: Order = new Order();
   constructor(private http: HttpClient) { }

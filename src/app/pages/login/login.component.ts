@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   alerta: boolean = false;
   textAlerta: string = '';
   carga: boolean = false;
-  idsesion: number;
+  idsesion: string;
 
   constructor(
     private Ruta: Router,
@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private UserInyected: UserService
   ) {
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
 
   ngOnInit() {
@@ -58,6 +59,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.carga = true;
     if(this.formularioLogin.valid){
       this.UserInyected.loginUsuario(this.formularioLogin.value.email, this.formularioLogin.value.passwd).subscribe((login_api)=>{
+
+        console.log(login_api);
+        if(login_api){
+          localStorage.setItem('sessionUser', login_api);
+          setTimeout(() => {
+            this.carga = false;
+            this.Ruta.navigateByUrl('/dashboard');
+          },1000);
+        }else{
+          this.alerta = true;
+          this.textAlerta = 'User does not exists';
+          setTimeout (() => {
+            this.alerta = false;
+          }, 3000);
+          this.carga = false;
+          this.formularioLogin.reset();
+        }
+/*
         if(login_api){
           localStorage.setItem('sessionUser', login_api[0].id );
           setTimeout(() => {
@@ -73,6 +92,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.carga = false;
           this.formularioLogin.reset();
         }
+*/
+
       });
     }else{
       this.alerta = true;

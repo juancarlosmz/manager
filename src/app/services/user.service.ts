@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   //mi local
-  //ruta: string = 'http://localhost:50/backend_manager/api/server';
+  ruta: string = 'http://localhost:50/backend_manager/api/server';
   //apolo
   //ruta: string = 'https://apolomultimedia-server1.info/jeremy/BackEnd_manager/api/server';
   //jeremy
-  ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api/server';
+  //ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api/server';
 
 
   userService: User = new User();
@@ -22,6 +22,17 @@ export class UserService {
     return this.http.get<User[]>(this.ruta + '/users.php');
   }
 
+  leerUsuario(token: string): Observable<User[]>{
+    return this.http.post<User[]>(this.ruta + '/user.php',
+      {
+        token: token
+      },
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+      }
+    );
+  }
+/*
   leerUsuario(id: number): Observable<User[]>{
     return this.http.post<User[]>(this.ruta + '/user.php',
       {
@@ -32,6 +43,8 @@ export class UserService {
       }
     );
   }
+*/
+
   guardarUsuario(usuario: User): Observable<User>{
     return this.http.post<User>(this.ruta + '/registrarUser.php',
     usuario,

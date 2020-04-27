@@ -16,13 +16,14 @@ export class AuthLayoutComponent implements OnInit, OnDestroy {
   //El usuario
   UsersClass: User = new User();
   validateRol: number = 0;
-  idsesion: number;
+  idsesion: string;
 
   constructor(
     private Ruta: Router,
     private UserInyected: UserService
   ) {
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
 
   ngOnInit() {

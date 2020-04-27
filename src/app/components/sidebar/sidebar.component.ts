@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit {
   public isCollapsed = true;
   carga: boolean = false;
   //El usuario
-  idsesion: number;
+  idsesion: string;
   UsersClass: User = new User();
   validateRol: number = 0;
   firstname: string = '';
@@ -37,8 +37,8 @@ export class SidebarComponent implements OnInit {
     private Ruta: Router,
     private UserInyected: UserService
   ) {
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
-
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
 
   ngOnInit() {

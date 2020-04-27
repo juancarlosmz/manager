@@ -12,7 +12,7 @@ import { Rol } from 'src/app/models/rol';
 export class UserProfileComponent implements OnInit {
   //El usuario
   UsersClass: User = new User();
-  idsesion: number;
+  idsesion: string;
   firstname: string = '';
   email: string = '';
   rol: number;
@@ -32,7 +32,8 @@ export class UserProfileComponent implements OnInit {
     private rutaActiva: ActivatedRoute,
     private UserInyected: UserService
   ) {
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
   ngOnInit() {
     this.userValidation();

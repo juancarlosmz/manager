@@ -22,7 +22,7 @@ export class RegisteruserComponent implements OnInit {
   UsersClass: Array<User> = new Array<User>();
   myUser: User = new User();
   //sesion
-  idsesion: number;
+  idsesion: string;
   rol: number;
 
   rols: Rol[] = [
@@ -40,7 +40,8 @@ export class RegisteruserComponent implements OnInit {
     private UserInyected: UserService,
     private Ruta: Router
   ){
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
 
   ngOnInit(): void {

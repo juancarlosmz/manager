@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
   ];
 
   //El usuario
-  idsesion: number;
+  idsesion: string;
   UsersClass: User = new User();
   validateRol: number = 0;
 
@@ -89,7 +89,8 @@ export class DashboardComponent implements OnInit {
     private UserInyected: UserService,
     private OrderInyected: OrderService,
   ) {
-    this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
+    this.idsesion = localStorage.getItem('sessionUser');
   }
 
   ngOnInit() {
