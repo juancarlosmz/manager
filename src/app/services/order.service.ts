@@ -23,6 +23,21 @@ export class OrderService {
   leerOrdersPending(): Observable<any>{
     return this.http.get<any>(this.ruta + '/OrdersPending.php');
   }
-
+  actualizaOrden(arrayOrder): Observable<any>{
+    return this.http.post<any>(this.ruta + '/PutOrder.php',
+    arrayOrder,
+    {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+    }
+    );
+  }
+  cancelOrden(arrayOrder): Observable<any>{
+    return this.http.post<any>(this.ruta + '/CancelOrder.php',
+    arrayOrder,
+    {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+    }
+    );
+  }
 
 }

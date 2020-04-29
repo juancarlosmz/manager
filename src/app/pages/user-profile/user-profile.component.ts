@@ -41,12 +41,18 @@ export class UserProfileComponent implements OnInit {
 
   userValidation(){
     if(this.idsesion){
-      this.UserInyected.leerUsuario(this.idsesion).subscribe((User_api)=>{
-        this.UsersClass[0] = User_api[0];
-        this.firstname = this.UsersClass[0].firstname;
-        this.email  = this.UsersClass[0].email;
-        this.rol  = this.UsersClass[0].rol;
-      });
+      this.UserInyected.leerUsuario(this.idsesion).subscribe(
+        (User_api)=>{
+          this.UsersClass[0] = User_api[0];
+          this.firstname = this.UsersClass[0].firstname;
+          this.email  = this.UsersClass[0].email;
+          this.rol  = this.UsersClass[0].rol;
+        },
+        error => {
+          localStorage.removeItem('sessionUser');
+          this.Ruta.navigateByUrl('/');
+        }
+      );
     }else{
       this.Ruta.navigateByUrl('/');
     }

@@ -91,6 +91,7 @@ export class DashboardComponent implements OnInit {
   ) {
     //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
     this.idsesion = localStorage.getItem('sessionUser');
+    console.log('Este es: ', this.idsesion);
   }
 
   ngOnInit() {
@@ -100,10 +101,16 @@ export class DashboardComponent implements OnInit {
 
   userValidation(){
     if(this.idsesion){
-      this.UserInyected.leerUsuario(this.idsesion).subscribe((User_api)=>{
-        this.UsersClass[0] = User_api[0];
-        this.validateRol = this.UsersClass[0].rol;
-      });
+      this.UserInyected.leerUsuario(this.idsesion).subscribe(
+        (User_api)=>{
+          this.UsersClass[0] = User_api[0];
+          this.validateRol = this.UsersClass[0].rol;
+        },
+        error => {
+          localStorage.removeItem('sessionUser');
+          this.Ruta.navigateByUrl('/');
+        }
+      );
     }else{
       this.Ruta.navigateByUrl('/');
     }

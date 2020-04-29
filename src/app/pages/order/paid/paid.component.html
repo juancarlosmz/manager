@@ -1,60 +1,61 @@
 <div class="card-header border-0">
     <div class="row align-items-center">
         <div class="col text-left">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Choose...</option>
-                <option value="1">Paid</option>
-                <option value="2">Pending</option>
-              </select>
-            </div>
-        </div>
-        <div class="col text-center">
-
+            <h3 class="mb-0">Orders</h3>
         </div>
         <div class="col text-right">
-            <button style="margin-bottom: 1rem !important;" class="btn btn-primary">Edit</button>
+            <div class="btn-group">
+                <button (click)="submitForm('close')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Close</button>
+                <button (click)="submitForm('open')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Open</button>
+                <button (click)="submitForm('cancel')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Cancel</button>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="table-responsive">
-    <!-- Projects table -->
-    <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Order</th>
-                <th scope="col">Client</th>
-                <th scope="col">Status</th>
-                <th scope="col">Value</th>
-                <th scope="col">Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let order of allOrdersPaid['orders']">
-                <th scope="row">
-                    <input type="checkbox">
-                </th>
-                <th scope="row">
-                    <a class="nav-link" href="https://jtcanvas.myshopify.com/admin/orders/{{order.id}}" target="_blank" aria-selected="false">{{order.number}}</a>
-                </th>
-                <td>
-                    {{order.billing_address.name}}
-                </td>
-                <td>
-                    <i class="fas fa-dollar-sign text-success"></i> {{order.financial_status}}
-                </td>
-                <td>
-                    {{order.total_price}}
-                </td>
-                <td>
-                    {{order.created_at | date}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<!-- <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate> -->
+<form [formGroup]="form" novalidate>
+    <div class="table-responsive">
+        <!-- Projects table -->
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Order</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Fulfillment</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col">Value</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of allOrdersPaid['orders']; let i=index">
+                    <th scope="row">
+                        <input type="checkbox" [value]="order.id" (change)="onCheckboxChange($event)" />
+                    </th>
+                    <th scope="row">
+                        <a class="nav-link" href="https://jtcanvas.myshopify.com/admin/orders/{{order.id}}" target="_blank" aria-selected="false">{{order.number}}</a>
+                    </th>
+                    <td>
+                        {{order.created_at | date}}
+                    </td>
+                    <td>
+                        {{order.customer.first_name}} {{order.customer.last_name}}
+                    </td>
+                    <td>
+                        {{order.fulfillment_status}}
+                    </td>
+                    <td>
+                        <i class="fas fa-dollar-sign text-info"></i> {{order.financial_status}}
+                    </td>
+                    <td>
+                        {{order.total_price}}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>

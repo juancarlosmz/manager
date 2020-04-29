@@ -47,11 +47,17 @@ export class SidebarComponent implements OnInit {
       this.isCollapsed = true;
     });
     if(this.idsesion){
-      this.UserInyected.leerUsuario(this.idsesion).subscribe((User_api)=>{
-        this.UsersClass[0] = User_api[0];
-        this.firstname = this.UsersClass[0].firstname;
-        this.validateRol = this.UsersClass[0].rol;
-      });
+      this.UserInyected.leerUsuario(this.idsesion).subscribe(
+        (User_api)=>{
+          this.UsersClass[0] = User_api[0];
+          this.firstname = this.UsersClass[0].firstname;
+          this.validateRol = this.UsersClass[0].rol;
+        },
+        error => {
+          localStorage.removeItem('sessionUser');
+          this.Ruta.navigateByUrl('/');
+        }
+      );
     }else{
       this.Ruta.navigateByUrl('/');
     }

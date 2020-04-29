@@ -40,24 +40,29 @@ export class UserProfileEditorComponent implements OnInit {
 
   userValidation(){
     if(this.idsesion){
-      this.UserInyected.leerUsuario(this.idsesion).subscribe((User_api)=>{
-        this.UsersClass[0] = User_api[0];
-        this.id  = User_api[0].id;
-        this.firstname = User_api[0].firstname;
-        this.lastname = User_api[0].lastname;
-        this.email  = User_api[0].email;
+      this.UserInyected.leerUsuario(this.idsesion).subscribe(
+        (User_api)=>{
+          this.UsersClass[0] = User_api[0];
+          this.id  = User_api[0].id;
+          this.firstname = User_api[0].firstname;
+          this.lastname = User_api[0].lastname;
+          this.email  = User_api[0].email;
 
-        this.formularioUsuario.setValue({
-          id: User_api[0].id,
-          firstname: User_api[0].firstname,
-          lastname: User_api[0].lastname,
-          email: User_api[0].email,
-          passwd: '',
-          confirmpasswd: '',
-          validatorPasswd: '',
-        });
-
-      });
+          this.formularioUsuario.setValue({
+            id: User_api[0].id,
+            firstname: User_api[0].firstname,
+            lastname: User_api[0].lastname,
+            email: User_api[0].email,
+            passwd: '',
+            confirmpasswd: '',
+            validatorPasswd: '',
+          });
+        },
+        error => {
+          localStorage.removeItem('sessionUser');
+          this.Ruta.navigateByUrl('/');
+        }
+      );
     }else{
       this.Ruta.navigateByUrl('/');
     }

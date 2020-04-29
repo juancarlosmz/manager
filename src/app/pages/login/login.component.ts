@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -38,9 +39,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   userValidation(){
     if(this.idsesion){
-      this.UserInyected.leerUsuario(this.idsesion).subscribe((User_api)=>{
-        this.Ruta.navigateByUrl('/dashboard');
-      });
+      this.UserInyected.leerUsuario(this.idsesion).subscribe(
+        (User_api)=>{
+          this.Ruta.navigateByUrl('/dashboard');
+        },
+        error => {
+          localStorage.removeItem('sessionUser');
+          this.Ruta.navigateByUrl('/');
+        }
+      );
     }else{
       this.Ruta.navigateByUrl('/');
     }

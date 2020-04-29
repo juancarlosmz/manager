@@ -24,6 +24,7 @@ export class RegisteruserComponent implements OnInit {
   //sesion
   idsesion: string;
   rol: number;
+  iduser: number;
 
   rols: Rol[] = [
     { value: 1, viewValue: 'Manager' },
@@ -51,14 +52,21 @@ export class RegisteruserComponent implements OnInit {
   }
   userValidation(){
     if(this.idsesion){
-      this.UserInyected.leerUsuario(this.idsesion).subscribe((User_api)=>{
-        this.rol  = User_api[0].rol;
-        if(this.rol == 1){
-          this.Ruta.navigateByUrl('/users');
-        }else{
-          this.Ruta.navigateByUrl('/dashboard');
+      this.UserInyected.leerUsuario(this.idsesion).subscribe(
+        (User_api)=>{
+          this.rol  = User_api[0].rol;
+          if(this.rol == 1){
+            this.iduser = User_api[0].id;
+            this.Ruta.navigateByUrl('/users');
+          }else{
+            this.Ruta.navigateByUrl('/dashboard');
+          }
+        },
+        error => {
+          localStorage.removeItem('sessionUser');
+          this.Ruta.navigateByUrl('/');
         }
-      });
+      );
     }else{
       this.Ruta.navigateByUrl('/dashboard');
     }
