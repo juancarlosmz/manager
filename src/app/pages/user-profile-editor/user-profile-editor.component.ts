@@ -60,6 +60,7 @@ export class UserProfileEditorComponent implements OnInit {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );

@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );

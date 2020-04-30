@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );

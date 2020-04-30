@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if(this.formularioLogin.valid){
       this.UserInyected.loginUsuario(this.formularioLogin.value.email, this.formularioLogin.value.passwd).subscribe((login_api)=>{
 
-        console.log(login_api);
+        //console.log(login_api);
         if(login_api){
           localStorage.setItem('sessionUser', login_api);
           setTimeout(() => {
@@ -114,7 +115,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   f_leersessionUser(){
-    console.log(JSON.parse(localStorage.getItem('sessionUser')));
+    //console.log(JSON.parse(localStorage.getItem('sessionUser')));
   }
   f_eliminarsessionUser(){
     localStorage.removeItem('sessionUser');

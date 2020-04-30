@@ -55,6 +55,7 @@ export class SidebarComponent implements OnInit {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );

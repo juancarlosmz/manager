@@ -50,6 +50,7 @@ export class UserProfileComponent implements OnInit {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );

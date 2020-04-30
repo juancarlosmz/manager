@@ -91,7 +91,6 @@ export class DashboardComponent implements OnInit {
   ) {
     //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
     this.idsesion = localStorage.getItem('sessionUser');
-    console.log('Este es: ', this.idsesion);
   }
 
   ngOnInit() {
@@ -108,6 +107,7 @@ export class DashboardComponent implements OnInit {
         },
         error => {
           localStorage.removeItem('sessionUser');
+          location.reload();
           this.Ruta.navigateByUrl('/');
         }
       );

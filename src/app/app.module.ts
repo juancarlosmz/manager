@@ -19,6 +19,7 @@ import { UserService } from './services/user.service';
 import { UserProfileEditorComponent } from './pages/user-profile-editor/user-profile-editor.component';
 import { PaidComponent } from './pages/order/paid/paid.component';
 import { PendingComponent } from './pages/order/pending/pending.component';
+import { ActivityComponent } from './pages/order/activity/activity.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { PendingComponent } from './pages/order/pending/pending.component';
     UserProfileEditorComponent,
     PaidComponent,
     PendingComponent,
+    ActivityComponent,
   ],
   providers: [
     UserService
