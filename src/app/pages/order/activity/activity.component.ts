@@ -10,6 +10,20 @@ export class ActivityComponent implements OnInit {
 
   allOrdersNew: Array<any> = [];
 
+  statusView: Status[] = [
+    {name: 'Choose...', value: 'null', },
+    {name: 'Awaiting photos', value: '_awaitingphotos', },
+    {name: 'Assigned designer - Lesley', value: '_ad_Lesley', },
+    {name: 'Assigned designer - Wesley', value: '_ad_Wesley', },
+    {name: 'Assigned designer - Jason', value: '_ad_Jason', },
+    {name: 'Assigned designer - Grace', value: '_ad_Grace', },
+    {name: 'Assigned designer - Liz', value: '_ad_Liz', },
+    {name: 'In print queue', value: '_inprintq', },
+    {name: 'At cutting station', value: '_atcuttings', },
+    {name: 'Busy framing', value: '_busyframing', },
+    {name: 'Awaiting packing', value: '_awaitingpacking', },
+  ];
+
   constructor(
     private OrderInyected: OrderService,
   ) { }
@@ -25,4 +39,10 @@ export class ActivityComponent implements OnInit {
     });
   }
 
+}
+
+//
+interface  Status {
+  name: String;
+  value: String;
 }

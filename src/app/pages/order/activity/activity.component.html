@@ -2,28 +2,34 @@
     <table class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Order</th>
-                <th scope="col">Budget</th>
+                <th scope="col">User</th>
+                <th scope="col">Date</th>
                 <th scope="col">Status</th>
-                <th scope="col">Users</th>
+                <!-- <th scope="col">Users</th> -->
                 <!-- <th scope="col">Completion</th> -->
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let order of allOrdersNew; let i=index">
-                <th scope="row">
+                <!-- <th scope="row">
                     <a class="nav-link" href="https://jtcanvas.myshopify.com/admin/orders/{{order.idorder}}" target="_blank" aria-selected="false">{{order.number}}</a>
-                </th>
+                </th> -->
                 <td>
-                    {{order.total}}
+                    {{order.nameuser}}
                 </td>
                 <td>
-                    <span class="badge badge-dot mr-4">
-                    <i class="bg-warning"></i> {{order.status}}
-                  </span>
+                    {{order.date | date}} - {{order.date | date:'shortTime'}}
                 </td>
                 <td>
+                    <span *ngFor="let item of statusView" class="badge badge-dot mr-4">
+                    <span *ngIf="order.status == item.value" >
+                      <i class="bg-warning"></i> {{item.name}}
+                    </span>
+                    </span>
+                </td>
+
+                <!-- <td>
                     <div class="avatar-group">
                         <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
                             <img alt="Image placeholder" src="assets/img/theme/team-1-800x800.jpg" class="rounded-circle">
@@ -38,7 +44,7 @@
                             <img alt="Image placeholder" src="assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
                         </a>
                     </div>
-                </td>
+                </td> -->
                 <!-- <td>
                     <div class="d-flex align-items-center">
                         <span class="mr-2">60%</span>
@@ -49,7 +55,7 @@
                         </div>
                     </div>
                 </td> -->
-                <td class="text-right">
+                <!-- <td class="text-right">
                     <div ngbDropdown placement="bottom-right">
                         <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
                             <i class="fas fa-ellipsis-v"></i>
@@ -60,7 +66,7 @@
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </div>
-                </td>
+                </td> -->
             </tr>
         </tbody>
     </table>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+/*
+
 import { User } from 'src/app/models/user';
 import { Order } from 'src/app/models/order';
 import { Router } from '@angular/router';
@@ -6,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { OrderService } from 'src/app/services/order.service';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+*/
 
 @Component({
   selector: 'app-pending',
@@ -14,10 +17,10 @@ import Swal from 'sweetalert2';
 })
 
 export class PendingComponent implements OnInit {
-  //banderita
+/*
   bandera: boolean = false;
 
-  // formulario
+
   form: FormGroup;
   neworder: NewOrder;
   neworder2: NewOrder2 = {
@@ -31,27 +34,32 @@ export class PendingComponent implements OnInit {
   newordersend: NewOrderSend;
   newordersend2: NewOrderSend2;
 
-  // note from api change status
+
   status: string = 'null';
 
-  //El usuario
+
   idsesion: string;
   iduser: number;
   UsersClass: User = new User();
   validateRol: number = 0;
 
-  //
   statusView: Status[] = [
     {name: 'Choose...', value: 'null', },
-    {name: 'New', value: '_new', },
-    {name: 'In progress', value: '_inprogress', },
-    {name: 'Printing', value: '_printing', },
+    {name: 'Awaiting photos', value: '_awaitingphotos', },
+    {name: 'Assigned designer - Lesley', value: '_ad_Lesley', },
+    {name: 'Assigned designer - Wesley', value: '_ad_Wesley', },
+    {name: 'Assigned designer - Jason', value: '_ad_Jason', },
+    {name: 'Assigned designer - Grace', value: '_ad_Grace', },
+    {name: 'Assigned designer - Liz', value: '_ad_Liz', },
+    {name: 'In print queue', value: '_inprintq', },
+    {name: 'At cutting station', value: '_atcuttings', },
+    {name: 'Busy framing', value: '_busyframing', },
+    {name: 'Awaiting packing', value: '_awaitingpacking', },
   ];
 
   StatusSelected: string;
   allOrdersPending: Array<Order> = new Array<Order>();
 
-  // add new values
   arrayOrders: any = [];
   arrayOrders2: any = [];
   constructor(
@@ -65,12 +73,14 @@ export class PendingComponent implements OnInit {
       checkArray: this.fb.array([], [Validators.required])
     });
   }
-
+*/
   ngOnInit(): void {
+/*
     this.userValidation();
     this.f_leerOrdersPending();
+    */
   }
-
+/*
   userValidation(){
     if(this.idsesion){
       this.UserInyected.leerUsuario(this.idsesion).subscribe(
@@ -117,21 +127,31 @@ export class PendingComponent implements OnInit {
       if (total) {totalvalid = total.innerText; } else {totalvalid = null; }
       if (note) {notevalid = note.innerText; } else {notevalid = ''; }
 
-      // para mi registro
       this.neworder2 = {iduser: this.iduser, idorder: idvalid, number: parseInt(numbervalid), customer: customervalid, total: totalvalid, status: this.StatusSelected};
       this.arrayOrders2.push(this.neworder2);
       this.newordersend2 = { Mydata: this.arrayOrders2 };
 
-      // envia al api el cambio de note
-      if (notevalid.includes('_new')) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_new', this.StatusSelected)};
-      } else if ((notevalid.includes('_framing'))) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_framing', this.StatusSelected)};
-      } else if ((notevalid.includes('_inprogress'))) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_inprogress', this.StatusSelected)};
-      } else if ((notevalid.includes('_printing'))) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_printing', this.StatusSelected)};
-      } else {
+      if (notevalid.includes('_awaitingphotos')) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingphotos', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Lesley'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Lesley', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Wesley'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Wesley', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Jason'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Jason', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Grace'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Grace', this.StatusSelected)};
+      }  else if ((notevalid.includes('_ad_Liz'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Liz', this.StatusSelected)};
+      }  else if ((notevalid.includes('_inprintq'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_inprintq', this.StatusSelected)};
+      }  else if ((notevalid.includes('_atcuttings'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_atcuttings', this.StatusSelected)};
+      }  else if ((notevalid.includes('_busyframing'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_busyframing', this.StatusSelected)};
+      }  else if ((notevalid.includes('_awaitingpacking'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingpacking', this.StatusSelected)};
+      }  else {
         this.neworder = { id: e.target.value, note: notevalid + ' ' + this.StatusSelected};
       }
 
@@ -143,11 +163,8 @@ export class PendingComponent implements OnInit {
       checkArray.controls.forEach((item: FormControl) => {
         if (item.value === e.target.value) {
           checkArray.removeAt(i);
-          // borra el registro
           this.arrayOrders2.splice(i, 1);
           this.newordersend2 = { Mydata: this.arrayOrders2 };
-
-          // borra registro de api
           this.arrayOrders.splice(i, 1);
           this.newordersend = { Mydata: this.arrayOrders };
           return;
@@ -164,7 +181,6 @@ export class PendingComponent implements OnInit {
     } else {
       this.bandera = true;
     }
-    // tslint:disable-next-line: forin
     for( const ord in this.arrayOrders2 ) {
       this.arrayOrders2[ord].status = e.target.value;
     }
@@ -173,7 +189,7 @@ export class PendingComponent implements OnInit {
   submitForm(operation) {
 
     switch (operation) {
-      case 'cancel':
+      case 'save':
         Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",
@@ -189,25 +205,14 @@ export class PendingComponent implements OnInit {
               this.arrayOrders = [];
               this.newordersend = { Mydata: '' };
             });
-            /* this.OrderInyected.cancelOrden(this.newordersend).subscribe((orderRecibido)=>{
-              this.arrayOrders = [];
-              console.log(orderRecibido);
-              this.f_leerOrdersPending();
-              Swal.fire(
-                'Paid!',
-                'Order has been paid.',
-                'success'
-              );
-            }); */
-
             this.OrderInyected.registrarOrdennew(this.newordersend2).subscribe((orderRecibido)=>{
               this.arrayOrders2 = [];
               this.newordersend2 = { Mydata: '' };
               setTimeout(() => {
                 this.f_leerOrdersPending();
                 Swal.fire(
-                  this.StatusSelected + '!',
-                  'Order has been ' + this.StatusSelected + '.',
+                  'Changed !',
+                  'Order has been changed',
                   'success'
                 );
               }, 500);
@@ -227,12 +232,14 @@ export class PendingComponent implements OnInit {
       default:
         console.log('No hay nada');
     }
-
-
   }
+*/
+
+
+
 
 }
-// new value order
+/*
 interface  NewOrder {
   id: number;
   note: String;
@@ -253,8 +260,8 @@ interface  NewOrderSend2 {
   Mydata: String;
 }
 
-//
 interface  Status {
   name: String;
   value: String;
 }
+*/

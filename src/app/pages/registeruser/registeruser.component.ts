@@ -29,11 +29,15 @@ export class RegisteruserComponent implements OnInit {
   rols: Rol[] = [
     { value: 1, viewValue: 'Manager' },
     { value: 2, viewValue: 'Customer support' },
-    { value: 3, viewValue: 'Designer' },
-    { value: 4, viewValue: 'Print operator' },
-    { value: 5, viewValue: 'Cutter' },
-    { value: 6, viewValue: 'Workshop' },
-    { value: 7, viewValue: 'Packer' },
+    { value: 3, viewValue: 'Designer - Lesley' },
+    { value: 4, viewValue: 'Designer - Wesley' },
+    { value: 5, viewValue: 'Designer - Jason' },
+    { value: 6, viewValue: 'Designer - Grace' },
+    { value: 7, viewValue: 'Designer - Liz' },
+    { value: 8, viewValue: 'Print operator' },
+    { value: 9, viewValue: 'Cutter' },
+    { value: 10, viewValue: 'Workshop' },
+    { value: 11, viewValue: 'Packer' },
   ];
 
   constructor(

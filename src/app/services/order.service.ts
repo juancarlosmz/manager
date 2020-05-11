@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderService {
-  //ruta: string = 'http://localhost:50/backend_manager/api';
+  // ruta: string = 'http://localhost:50/backend_manager/api';
   //jeremy
   ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api';
 

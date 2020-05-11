@@ -14,14 +14,19 @@ import Swal from 'sweetalert2';
 })
 
 export class PaidComponent implements OnInit {
-  //banderita
+  // Banderita
   bandera: boolean = false;
+
+  // Pagination
+  config: any;
+  totalOrdenes: number = 250;
 
   // formulario
   form: FormGroup;
   neworder: NewOrder;
   neworder2: NewOrder2 = {
     iduser: null,
+    nameuser: null,
     idorder: null,
     number: null,
     customer: null,
@@ -37,15 +42,25 @@ export class PaidComponent implements OnInit {
   // El usuario
   idsesion: string;
   iduser: number;
+  nameuser: string;
+  lastnameuser: string;
   UsersClass: User = new User();
   validateRol: number = 0;
 
-  //
+  // carga
+  carga: boolean = true;
   statusView: Status[] = [
     {name: 'Choose...', value: 'null', },
-    {name: 'New', value: '_new', },
-    {name: 'In progress', value: '_inprogress', },
-    {name: 'Printing', value: '_printing', },
+    {name: 'Awaiting photos', value: '_awaitingphotos', },
+    {name: 'Assigned designer - Lesley', value: '_ad_Lesley', },
+    {name: 'Assigned designer - Wesley', value: '_ad_Wesley', },
+    {name: 'Assigned designer - Jason', value: '_ad_Jason', },
+    {name: 'Assigned designer - Grace', value: '_ad_Grace', },
+    {name: 'Assigned designer - Liz', value: '_ad_Liz', },
+    {name: 'In print queue', value: '_inprintq', },
+    {name: 'At cutting station', value: '_atcuttings', },
+    {name: 'Busy framing', value: '_busyframing', },
+    {name: 'Awaiting packing', value: '_awaitingpacking', },
   ];
 
   StatusSelected: string;
@@ -64,6 +79,12 @@ export class PaidComponent implements OnInit {
     this.form = this.fb.group({
       checkArray: this.fb.array([], [Validators.required])
     });
+    // pagination
+    this.config = {
+      itemsPerPage: 25,
+      currentPage: 1,
+      totalItems: 250
+    };
   }
 
   ngOnInit(): void {
@@ -77,6 +98,8 @@ export class PaidComponent implements OnInit {
         (User_api)=>{
           this.UsersClass[0] = User_api[0];
           this.iduser = User_api[0].id;
+          this.nameuser = User_api[0].firstname;
+          this.lastnameuser = User_api[0].lastname;
           this.validateRol = this.UsersClass[0].rol;
         },
         error => {
@@ -91,9 +114,70 @@ export class PaidComponent implements OnInit {
   }
 
   f_leerOrdersPaid() {
-    this.OrderInyected.leerOrdersPaid().subscribe((Orders_api)=>{
+    this.OrderInyected.leerOrders().subscribe((Orders_api)=>{
       this.allOrdersPaid = Orders_api;
+
+      console.log(Orders_api['orders'].length);
+      console.log('el usuario', this.validateRol);
+      for (let index = 0; index < Orders_api['orders'].length; index++) {
+        const element = Orders_api['orders'][index];
+        if(element.note){
+          if (element.note.includes('_awaitingphotos')) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingphotos', this.StatusSelected)};
+            console.log('user 1');
+          } else if ((element.note.includes('_ad_Lesley'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Lesley', this.StatusSelected)};
+            console.log('user 2');
+          } else if ((element.note.includes('_ad_Wesley'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Wesley', this.StatusSelected)};
+            console.log('user 3');
+          } else if ((element.note.includes('_ad_Jason'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Jason', this.StatusSelected)};
+            console.log('user 4');
+          } else if ((element.note.includes('_ad_Grace'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Grace', this.StatusSelected)};
+            console.log('user 5');
+          }  else if ((element.note.includes('_ad_Liz'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Liz', this.StatusSelected)};
+            console.log('user 6');
+          }  else if ((element.note.includes('_inprintq'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_inprintq', this.StatusSelected)};
+            console.log('user 7');
+          }  else if ((element.note.includes('_atcuttings'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_atcuttings', this.StatusSelected)};
+            console.log('user 8');
+          }  else if ((element.note.includes('_busyframing'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_busyframing', this.StatusSelected)};
+            console.log('user 9');
+          }  else if ((element.note.includes('_awaitingpacking'))) {
+            // this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingpacking', this.StatusSelected)};
+            console.log('user 10');
+          }  else {
+            // this.neworder = { id: e.target.value, note: notevalid + ' ' + this.StatusSelected};
+            console.log('user 11');
+          }
+        }
+        // console.log('que es esto', element.note);
+      }
+      /* console.log(Orders_api['orders'].note.includes('_ad_Lesley'));
+      console.log(Orders_api['orders'].note.includes('_ad_Jason'));
+      console.log(Orders_api['orders'].note.includes('_ad_Grace'));
+      console.log(Orders_api['orders'].note.includes('_ad_Liz'));
+      console.log(Orders_api['orders'].note.includes('_inprintq'));
+      console.log(Orders_api['orders'].note.includes('_atcuttings'));
+      console.log(Orders_api['orders'].note.includes('_busyframing'));
+      console.log(Orders_api['orders'].note.includes('_awaitingpacking')); */
+    // pagination
+      this.config = {
+        itemsPerPage: 25,
+        currentPage: 1,
+        totalItems: this.allOrdersPaid.length
+      };
+      this.carga = false;
     });
+  }
+  pageChanged(event){
+    this.config.currentPage = event;
   }
 
   onCheckboxChange(e) {
@@ -118,25 +202,39 @@ export class PaidComponent implements OnInit {
       if (note) {notevalid = note.innerText; } else {notevalid = ''; }
 
       // para mi registro
-      this.neworder2 = {iduser: this.iduser, idorder: idvalid, number: parseInt(numbervalid), customer: customervalid, total: totalvalid, status: this.StatusSelected};
+      this.neworder2 = {iduser: this.iduser, nameuser: this.nameuser+' '+this.lastnameuser , idorder: idvalid, number: parseInt(numbervalid), customer: customervalid, total: totalvalid, status: this.StatusSelected};
       this.arrayOrders2.push(this.neworder2);
       this.newordersend2 = { Mydata: this.arrayOrders2 };
+      console.log('para mi registro esta ok creo ',this.newordersend2);
 
       // envia al api el cambio de note
-      if (notevalid.includes('_new')) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_new', this.StatusSelected)};
-      } else if ((notevalid.includes('_framing'))) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_framing', this.StatusSelected)};
-      } else if ((notevalid.includes('_inprogress'))) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_inprogress', this.StatusSelected)};
-      } else if ((notevalid.includes('_printing'))) {
-        this.neworder = { id: e.target.value, note: notevalid.replace('_printing', this.StatusSelected)};
-      } else {
+      if (notevalid.includes('_awaitingphotos')) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingphotos', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Lesley'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Lesley', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Wesley'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Wesley', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Jason'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Jason', this.StatusSelected)};
+      } else if ((notevalid.includes('_ad_Grace'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Grace', this.StatusSelected)};
+      }  else if ((notevalid.includes('_ad_Liz'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Liz', this.StatusSelected)};
+      }  else if ((notevalid.includes('_inprintq'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_inprintq', this.StatusSelected)};
+      }  else if ((notevalid.includes('_atcuttings'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_atcuttings', this.StatusSelected)};
+      }  else if ((notevalid.includes('_busyframing'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_busyframing', this.StatusSelected)};
+      }  else if ((notevalid.includes('_awaitingpacking'))) {
+        this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingpacking', this.StatusSelected)};
+      }  else {
         this.neworder = { id: e.target.value, note: notevalid + ' ' + this.StatusSelected};
       }
 
       this.arrayOrders.push(this.neworder);
       this.newordersend = { Mydata: this.arrayOrders };
+      console.log('para el api shopify',this.newordersend);
     } else {
       let i: number = 0;
       checkArray.controls.forEach((item: FormControl) => {
@@ -163,16 +261,48 @@ export class PaidComponent implements OnInit {
     } else {
       this.bandera = true;
     }
-    // tslint:disable-next-line: forin
+
     for( const ord in this.arrayOrders2 ) {
       this.arrayOrders2[ord].status = e.target.value;
     }
+    for( const ord in this.arrayOrders ) {
+      // envia al api el cambio de note
+      if (this.arrayOrders[ord].note.includes('_awaitingphotos')) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_awaitingphotos', this.StatusSelected);
+      } else if ((this.arrayOrders[ord].note.includes('_ad_Lesley'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_ad_Lesley', this.StatusSelected);
+      } else if ((this.arrayOrders[ord].note.includes('_ad_Wesley'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_ad_Wesley', this.StatusSelected);
+      } else if ((this.arrayOrders[ord].note.includes('_ad_Jason'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_ad_Jason', this.StatusSelected);
+      } else if ((this.arrayOrders[ord].note.includes('_ad_Grace'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_ad_Grace', this.StatusSelected);
+      }  else if ((this.arrayOrders[ord].note.includes('_ad_Liz'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_ad_Liz', this.StatusSelected);
+      }  else if ((this.arrayOrders[ord].note.includes('_inprintq'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_inprintq', this.StatusSelected);
+      }  else if ((this.arrayOrders[ord].note.includes('_atcuttings'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_atcuttings', this.StatusSelected);
+      }  else if ((this.arrayOrders[ord].note.includes('_busyframing'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_busyframing', this.StatusSelected);
+      }  else if ((this.arrayOrders[ord].note.includes('_awaitingpacking'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('_awaitingpacking', this.StatusSelected);
+      } else if ((this.arrayOrders[ord].note.includes('undefined'))) {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note.replace('undefined', this.StatusSelected);
+      } else {
+        this.arrayOrders[ord].note = this.arrayOrders[ord].note + ' ' + this.StatusSelected;
+      }
+    }
+
+    // tslint:disable-next-line: forin
+    console.log('para mi registro esta ok creo ',this.newordersend2);
+    console.log('para el api shopify',this.newordersend);
   }
 
   submitForm(operation) {
 
     switch (operation) {
-      case 'cancel':
+      case 'save':
         Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",
@@ -205,8 +335,8 @@ export class PaidComponent implements OnInit {
               setTimeout(() => {
                 this.f_leerOrdersPaid();
                 Swal.fire(
-                  this.StatusSelected + '!',
-                  'Order has been ' + this.StatusSelected + '.',
+                  'Changed !',
+                  'Order has been changed',
                   'success'
                 );
               }, 500);
@@ -238,6 +368,7 @@ interface  NewOrder {
 }
 interface  NewOrder2 {
   iduser: number;
+  nameuser: string;
   idorder: string;
   number: number;
   customer: string;

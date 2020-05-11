@@ -14,82 +14,106 @@
         </div>
         <div class="text-right col-xs-12	col-sm-6">
             <div class="btn-group" *ngIf="bandera">
-                <button (click)="submitForm('close')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Close</button>
+                <!-- <button (click)="submitForm('close')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Close</button>
                 <button (click)="submitForm('open')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Open</button>
-                <button (click)="submitForm('cancel')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Cancel</button>
+                <button (click)="submitForm('cancel')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Cancel</button> -->
+                <button (click)="submitForm('save')" *ngIf="!this.form.controls['checkArray'].errors?.required" class="btn btn-sm btn-primary">Save</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate> -->
-<form [formGroup]="form" novalidate>
-    <div class="table-responsive">
-        <!-- Projects table -->
-        <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Order</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Customer</th>
-                    <th scope="col">Fulfillment</th>
-                    <th scope="col">Payment</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Value</th>
+<div *ngIf="!carga">
+    <form [formGroup]="form" novalidate>
+        <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Order</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Fulfillment</th>
+                        <th scope="col">Payment</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Value</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let order of allOrdersPaid['orders']; let i=index">
-                    <th scope="row">
-                        <input *ngIf="bandera" type="checkbox" [value]="order.id" (change)="onCheckboxChange($event)" />
-                        <label style="display: none !important;" id="id-{{order.id}}">{{order.id}}</label>
-                        <label style="display: none !important;" id="note-{{order.id}}">{{order.note}}</label>
-                    </th>
-                    <th scope="row">
-                        <a class="nav-link" href="https://jtcanvas.myshopify.com/admin/orders/{{order.id}}" target="_blank" aria-selected="false">
-                            <label id="number-{{order.id}}">{{order.number}}</label>
-                        </a>
-                    </th>
-                    <td>
-                        <label>{{order.created_at | date}}</label>
-                    </td>
-                    <td>
-                        <label id="customer-{{order.id}}">{{order.customer.first_name}} {{order.customer.last_name}}</label>
-                    </td>
-                    <td>
-                        <label *ngIf="!order.fulfillment_status" class="badge badge-dot mr-4 text-warning" for="">
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of allOrdersPaid['orders'] | paginate: config; let i=index ">
+                        <th scope="row">
+                            <input type="checkbox" [value]="order.id" (change)="onCheckboxChange($event)" />
+                            <label style="display: none !important;" id="id-{{order.id}}">{{order.id}}</label>
+                            <label style="display: none !important;" id="note-{{order.id}}">{{order.note}}</label>
+                        </th>
+                        <th scope="row">
+                            <a class="nav-link" href="https://jtcanvas.myshopify.com/admin/orders/{{order.id}}" target="_blank" aria-selected="false">
+                                <label id="number-{{order.id}}">{{order.number}}</label>
+                            </a>
+                        </th>
+                        <td>
+                            <label>{{order.created_at | date}}</label>
+                        </td>
+                        <td>
+                            <label id="customer-{{order.id}}">{{order.customer.first_name}} {{order.customer.last_name}}</label>
+                        </td>
+                        <td>
+                            <label *ngIf="!order.fulfillment_status" class="badge badge-dot mr-4 text-warning" for="">
                         <i class="bg-warning"></i>
                         Unfulfilled
                       </label>
-                        <label *ngIf="order.fulfillment_status" for="">
+                            <label *ngIf="order.fulfillment_status" for="">
                         <i class="bg-warning"></i>
                         {{order.fulfillment_status}}
                       </label>
-                    </td>
-                    <td>
-                        <span class="badge badge-dot mr-4">
+                        </td>
+                        <td>
+                            <span class="badge badge-dot mr-4">
                         <i class="bg-success"></i> {{order.financial_status}}
                       </span>
-                    </td>
-                    <td>
-                        <span class="badge badge-dot mr-4">
-                        <i class="bg-success"></i>
-                        <span *ngIf="order.note" >
-                          <span *ngIf="order.note.includes('_new')" >New</span>
-                        <span *ngIf="order.note.includes('_inprogress')">In progress</span>
-                        <span *ngIf="order.note.includes('_printing')">Printing</span>
-                        <span *ngIf="order.note.includes('_framing')">Framing</span>
-                        </span>
-                        <span *ngIf="!order.note">null</span>
-                        </span>
-                    </td>
-                    <td>
-                        <label id="total-{{order.id}}">{{order.total_price}}</label>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                        <td>
+
+                            <span class="badge badge-dot mr-4">
+                  <span *ngIf="order.note" >
+
+                    <span *ngIf="order.note.includes('_awaitingphotos')" ><i class="bg-danger"></i> Awaiting photos</span>
+                            <span *ngIf="order.note.includes('_ad_Lesley')"><i class="bg-primary"></i> Assigned designer - Lesley</span>
+                            <span *ngIf="order.note.includes('_ad_Wesley')"><i class="bg-success"></i> Assigned designer - Wesley</span>
+                            <span *ngIf="order.note.includes('_ad_Jason')"><i class="bg-info"></i> Assigned designer - Jason</span>
+                            <span *ngIf="order.note.includes('_ad_Grace')"><i class="bg-success"></i> Assigned designer - Grace</span>
+                            <span *ngIf="order.note.includes('_ad_Liz')"><i class="bg-primary"></i> Assigned designer - Liz</span>
+                            <span *ngIf="order.note.includes('_inprintq')"><i class="bg-success"></i> In print queue</span>
+                            <span *ngIf="order.note.includes('_atcuttings')"><i class="bg-info"></i> At cutting station</span>
+                            <span *ngIf="order.note.includes('_busyframing')"><i class="bg-warning"></i> Busy framing</span>
+                            <span *ngIf="order.note.includes('_awaitingpacking')"><i class="bg-warning"></i> Awaiting packing</span>
+                            </span>
+                            <span *ngIf="!order.note"><i class="bg-danger"></i> Awaiting photos</span>
+
+                            </span>
+                        </td>
+                        <td>
+                            <label id="total-{{order.id}}">{{order.total_price}}</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="card-header border-0">
+        <div class="row align-items-center">
+            <div class="text-left col-xs-12	col-sm-12">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+        </div>
     </div>
-</form>
+</div>
+
+<div *ngIf="carga" class="text-center">
+    <div class="fa-3x">
+        <i class="fas fa-circle-notch fa-spin"></i>
+    </div>
+</div>
