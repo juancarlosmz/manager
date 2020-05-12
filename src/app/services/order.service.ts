@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderService {
-  // ruta: string = 'http://localhost:50/backend_manager/api';
+  ruta: string = 'http://localhost:50/backend_manager/api';
   //jeremy
-  ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api';
+  // ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api';
 
   orderService: Order = new Order();
   constructor(private http: HttpClient) { }
@@ -19,6 +19,42 @@ export class OrderService {
   }
   leerOrdersNew(): Observable<any>{
     return this.http.get<any>(this.ruta + '/server/OrdersNew.php');
+  }
+  leerOrdersNewrol0(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew.php');
+  }
+  leerOrdersNewrol1(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew1.php');
+  }
+  leerOrdersNewrol2(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew1.php');
+  }
+  leerOrdersNewrol3(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew3.php');
+  }
+  leerOrdersNewrol4(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew4.php');
+  }
+  leerOrdersNewrol5(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew5.php');
+  }
+  leerOrdersNewrol6(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew6.php');
+  }
+  leerOrdersNewrol7(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew7.php');
+  }
+  leerOrdersNewrol8(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew8.php');
+  }
+  leerOrdersNewrol9(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew9.php');
+  }
+  leerOrdersNewrol10(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew10.php');
+  }
+  leerOrdersNewrol11(): Observable<any>{
+    return this.http.get<any>(this.ruta + '/server/OrdersNew11.php');
   }
   leerOrdersPaid(): Observable<any>{
     return this.http.get<any>(this.ruta + '/shopify/OrdersPaid.php');

@@ -70,6 +70,11 @@
             </form> -->
             <!-- Navigation -->
             <ul class="navbar-nav">
+                <li *ngIf="idsesion && validateRol == 1" class=" nav-item">
+                    <a style="cursor: pointer;" [routerLink]="['/users']" class="nav-link">
+                        <i class="fas fa-users text-pink"></i> Users register
+                    </a>
+                </li>
                 <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
                     <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
                         <i class="ni {{menuItem.icon}}"></i> {{menuItem.title}}

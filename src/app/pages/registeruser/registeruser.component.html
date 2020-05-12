@@ -98,35 +98,52 @@
     </div>
 </form>
 <br>
-<div class="table-responsive">
-    <!-- Projects table -->
-    <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of UsersClass; let posicion = index">
-                <th *ngIf="user.id != iduser" style="display:none;">{{user.id}}</th>
-                <th *ngIf="user.id != iduser" scope="row">{{user.firstname}}</th>
-                <td *ngIf="user.id != iduser"> {{user.email}} </td>
-                <td *ngIf="user.id != iduser">
-                    <label *ngFor="let rol of rols">
+
+<div *ngIf="!carga">
+    <div class="table-responsive">
+        <!-- Projects table -->
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of UsersClass | paginate: config; let posicion = index">
+                    <th *ngIf="user.id != iduser" style="display:none;">{{user.id}}</th>
+                    <th *ngIf="user.id != iduser" scope="row">{{user.firstname}}</th>
+                    <td *ngIf="user.id != iduser"> {{user.email}} </td>
+                    <td *ngIf="user.id != iduser">
+                        <label *ngFor="let rol of rols">
               <label *ngIf="rol.value == user.rol" >{{ rol.viewValue }}</label>
-                    </label>
-                </td>
-                <td *ngIf="user.id != iduser">
-                    <i style="cursor: pointer;" (click)="f_edit(posicion)" class="fas fa-edit text-info mr-3"></i>
-                </td>
-                <td *ngIf="user.id != iduser">
-                    <i style="cursor: pointer;" (click)="f_eliminarUsuario(user.id)" class="fas fa-trash text-danger mr-3"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        </label>
+                    </td>
+                    <td *ngIf="user.id != iduser">
+                        <i style="cursor: pointer;" (click)="f_edit(posicion)" class="fas fa-edit text-info mr-3"></i>
+                    </td>
+                    <td *ngIf="user.id != iduser">
+                        <i style="cursor: pointer;" (click)="f_eliminarUsuario(user.id)" class="fas fa-trash text-danger mr-3"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <div class="row align-items-center">
+            <div class="text-left col-xs-12	col-sm-12">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div *ngIf="carga" class="text-center">
+    <div class="fa-3x">
+        <i class="fas fa-circle-notch fa-spin"></i>
+    </div>
 </div>

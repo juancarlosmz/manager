@@ -35,6 +35,7 @@ export class PaidComponent implements OnInit {
   };
   newordersend: NewOrderSend;
   newordersend2: NewOrderSend2;
+  newOrderSendbyrol: NewOrderSendbyrol;
 
   // note from api change status
   status: string = 'null';
@@ -64,11 +65,16 @@ export class PaidComponent implements OnInit {
   ];
 
   StatusSelected: string;
-  allOrdersPaid: Array<Order> = new Array<Order>();
+  //allOrdersPaid: Array<Order> = new Array<Order>();
+
+  allOrdersPaid: any = [];
 
   // add new values
   arrayOrders: any = [];
   arrayOrders2: any = [];
+  // validates by rol
+
+  arrayOrdersbyrol: any = [];
   constructor(
     private Ruta: Router,
     private UserInyected: UserService,
@@ -89,7 +95,7 @@ export class PaidComponent implements OnInit {
 
   ngOnInit(): void {
     this.userValidation();
-    this.f_leerOrdersPaid();
+    //this.f_leerOrdersPaid();
   }
 
   userValidation(){
@@ -101,6 +107,121 @@ export class PaidComponent implements OnInit {
           this.nameuser = User_api[0].firstname;
           this.lastnameuser = User_api[0].lastname;
           this.validateRol = this.UsersClass[0].rol;
+          this.OrderInyected.leerOrders().subscribe((Orders_api)=>{
+            // this.allOrdersPaid = Orders_api;
+            if (this.validateRol == 1) {
+              this.allOrdersPaid = Orders_api;
+            }else if(this.validateRol == 2){
+              this.allOrdersPaid = Orders_api;
+            }else if(this.validateRol == 3){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_ad_Lesley'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 4){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_ad_Wesley'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 5){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_ad_Jason'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 6){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_ad_Grace'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 7){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_ad_Liz'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 8){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_inprintq'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 9){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_atcuttings'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 10){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_busyframing'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }else if(this.validateRol == 11){
+              for (let index = 0; index < Orders_api['orders'].length; index++) {
+                const element = Orders_api['orders'][index];
+                if(element.note){
+                  if ((element.note.includes('_awaitingpacking'))) {
+                    this.arrayOrdersbyrol.push(element);
+                    this.newOrderSendbyrol = { orders: this.arrayOrdersbyrol };
+                    this.allOrdersPaid = this.newOrderSendbyrol;
+                  }
+                }
+              }
+            }
+            // pagination
+            this.config = {
+              itemsPerPage: 25,
+              currentPage: 1,
+              totalItems: this.allOrdersPaid.length
+            };
+            this.carga = false;
+          });
+
         },
         error => {
           localStorage.removeItem('sessionUser');
@@ -119,54 +240,7 @@ export class PaidComponent implements OnInit {
 
       console.log(Orders_api['orders'].length);
       console.log('el usuario', this.validateRol);
-      for (let index = 0; index < Orders_api['orders'].length; index++) {
-        const element = Orders_api['orders'][index];
-        if(element.note){
-          if (element.note.includes('_awaitingphotos')) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingphotos', this.StatusSelected)};
-            console.log('user 1');
-          } else if ((element.note.includes('_ad_Lesley'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Lesley', this.StatusSelected)};
-            console.log('user 2');
-          } else if ((element.note.includes('_ad_Wesley'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Wesley', this.StatusSelected)};
-            console.log('user 3');
-          } else if ((element.note.includes('_ad_Jason'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Jason', this.StatusSelected)};
-            console.log('user 4');
-          } else if ((element.note.includes('_ad_Grace'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Grace', this.StatusSelected)};
-            console.log('user 5');
-          }  else if ((element.note.includes('_ad_Liz'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_ad_Liz', this.StatusSelected)};
-            console.log('user 6');
-          }  else if ((element.note.includes('_inprintq'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_inprintq', this.StatusSelected)};
-            console.log('user 7');
-          }  else if ((element.note.includes('_atcuttings'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_atcuttings', this.StatusSelected)};
-            console.log('user 8');
-          }  else if ((element.note.includes('_busyframing'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_busyframing', this.StatusSelected)};
-            console.log('user 9');
-          }  else if ((element.note.includes('_awaitingpacking'))) {
-            // this.neworder = { id: e.target.value, note: notevalid.replace('_awaitingpacking', this.StatusSelected)};
-            console.log('user 10');
-          }  else {
-            // this.neworder = { id: e.target.value, note: notevalid + ' ' + this.StatusSelected};
-            console.log('user 11');
-          }
-        }
-        // console.log('que es esto', element.note);
-      }
-      /* console.log(Orders_api['orders'].note.includes('_ad_Lesley'));
-      console.log(Orders_api['orders'].note.includes('_ad_Jason'));
-      console.log(Orders_api['orders'].note.includes('_ad_Grace'));
-      console.log(Orders_api['orders'].note.includes('_ad_Liz'));
-      console.log(Orders_api['orders'].note.includes('_inprintq'));
-      console.log(Orders_api['orders'].note.includes('_atcuttings'));
-      console.log(Orders_api['orders'].note.includes('_busyframing'));
-      console.log(Orders_api['orders'].note.includes('_awaitingpacking')); */
+
     // pagination
       this.config = {
         itemsPerPage: 25,
@@ -176,6 +250,8 @@ export class PaidComponent implements OnInit {
       this.carga = false;
     });
   }
+
+  //paginacion
   pageChanged(event){
     this.config.currentPage = event;
   }
@@ -381,6 +457,10 @@ interface  NewOrderSend {
 
 interface  NewOrderSend2 {
   Mydata: String;
+}
+
+interface  NewOrderSendbyrol{
+  orders: String;
 }
 
 //

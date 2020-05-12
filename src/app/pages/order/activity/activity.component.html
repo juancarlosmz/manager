@@ -1,35 +1,36 @@
-<div class="table-responsive">
-    <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">User</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <!-- <th scope="col">Users</th> -->
-                <!-- <th scope="col">Completion</th> -->
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let order of allOrdersNew; let i=index">
-                <!-- <th scope="row">
+<div *ngIf="!carga">
+    <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">User</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <!-- <th scope="col">Users</th> -->
+                    <!-- <th scope="col">Completion</th> -->
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of allOrdersNew | paginate: config; let i=index">
+                    <!-- <th scope="row">
                     <a class="nav-link" href="https://jtcanvas.myshopify.com/admin/orders/{{order.idorder}}" target="_blank" aria-selected="false">{{order.number}}</a>
                 </th> -->
-                <td>
-                    {{order.nameuser}}
-                </td>
-                <td>
-                    {{order.date | date}} - {{order.date | date:'shortTime'}}
-                </td>
-                <td>
-                    <span *ngFor="let item of statusView" class="badge badge-dot mr-4">
+                    <td>
+                        {{order.nameuser}}
+                    </td>
+                    <td>
+                        {{order.date | date}} - {{order.date | date:'shortTime'}}
+                    </td>
+                    <td>
+                        <span *ngFor="let item of statusView" class="badge badge-dot mr-4">
                     <span *ngIf="order.status == item.value" >
                       <i class="bg-warning"></i> {{item.name}}
                     </span>
-                    </span>
-                </td>
+                        </span>
+                    </td>
 
-                <!-- <td>
+                    <!-- <td>
                     <div class="avatar-group">
                         <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Ryan Tompson">
                             <img alt="Image placeholder" src="assets/img/theme/team-1-800x800.jpg" class="rounded-circle">
@@ -45,7 +46,7 @@
                         </a>
                     </div>
                 </td> -->
-                <!-- <td>
+                    <!-- <td>
                     <div class="d-flex align-items-center">
                         <span class="mr-2">60%</span>
                         <div>
@@ -55,7 +56,7 @@
                         </div>
                     </div>
                 </td> -->
-                <!-- <td class="text-right">
+                    <!-- <td class="text-right">
                     <div ngbDropdown placement="bottom-right">
                         <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
                             <i class="fas fa-ellipsis-v"></i>
@@ -67,7 +68,21 @@
                         </div>
                     </div>
                 </td> -->
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-header border-0">
+        <div class="row align-items-center">
+            <div class="text-left col-xs-12	col-sm-12">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="carga" class="text-center">
+    <div class="fa-3x">
+        <i class="fas fa-circle-notch fa-spin"></i>
+    </div>
 </div>

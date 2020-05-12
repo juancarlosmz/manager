@@ -15,6 +15,14 @@ import Swal from 'sweetalert2'
   styleUrls: ['./registeruser.component.css']
 })
 export class RegisteruserComponent implements OnInit {
+
+  // Pagination
+  config: any;
+  totalOrdenes: number = 250;
+
+  // carga
+  carga: boolean = true;
+
   formularioUsuario: FormGroup;
   esNuevo: boolean = true;
   posicionEditar: number = -1;
@@ -47,6 +55,13 @@ export class RegisteruserComponent implements OnInit {
   ){
     //this.idsesion = JSON.parse(localStorage.getItem('sessionUser'));
     this.idsesion = localStorage.getItem('sessionUser');
+
+    // pagination
+    this.config = {
+      itemsPerPage: 25,
+      currentPage: 1,
+      totalItems: 250
+    };
   }
 
   ngOnInit(): void {
@@ -91,6 +106,15 @@ export class RegisteruserComponent implements OnInit {
   f_leerUsuarios(){
     this.UserInyected.leerUsuarios().subscribe((Users_api)=>{
       this.UsersClass = Users_api;
+
+      // pagination
+      this.config = {
+        itemsPerPage: 6,
+        currentPage: 1,
+        totalItems: this.UsersClass.length
+      };
+      this.carga = false;
+
     });
   }
   f_agregarUsuario(){
@@ -151,6 +175,9 @@ export class RegisteruserComponent implements OnInit {
     this.Ruta.navigateByUrl('/user-profile');
   }
 
-
+  //paginacion
+  pageChanged(event){
+    this.config.currentPage = event;
+  }
 
 }

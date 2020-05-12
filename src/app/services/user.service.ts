@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   //mi local
-  // ruta: string = 'http://localhost:50/backend_manager/api/server';
+  ruta: string = 'http://localhost:50/backend_manager/api/server';
   //apolo
   //ruta: string = 'https://apolomultimedia-server1.info/jeremy/BackEnd_manager/api/server';
   //jeremy
-  ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api/server';
+  // ruta: string = 'https://canvasandmorephotos.co.za/BackEnd_manager/api/server';
 
 
   userService: User = new User();
